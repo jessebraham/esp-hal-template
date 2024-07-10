@@ -1,0 +1,22 @@
+[env]
+DEFMT_LOG="info"
+
+[build]
+target    = "{{ rust_target }}"
+rustflags = [
+  "-C", "link-arg=-Tdefmt.x",
+  "-C", "link-arg=-Tlinkall.x",
+{%- if arch == "xtensa" %}
+  "-C", "link-arg=-nostartfiles",
+{% else %}
+  # NOTE: This is required to obtain backtraces, however it may negatively
+  #       impact the performance of your application.
+  "-C", "force-frame-pointers",
+{% endif -%}
+]
+
+[target.{{ rust_target }}]
+runner = "probe-rs run --chip={{ mcu }}"
+
+[unstable]
+build-std = ["core"]

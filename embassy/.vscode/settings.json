@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+
+  // Even Better TOML:
+  "evenBetterToml.formatter.alignComments": true,
+  "evenBetterToml.formatter.alignEntries": true,
+  "evenBetterToml.formatter.arrayAutoExpand": true,
+  "evenBetterToml.formatter.arrayTrailingComma": true,
+  "evenBetterToml.formatter.reorderArrays": true
+}
