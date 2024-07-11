@@ -26,7 +26,14 @@ With the prerequisite tools installed, you can generate a project from the templ
 cargo generate jessebraham/esp-hal-template embassy
 ```
 
-After answering the prompts, you can change into your project's directory and execute your application on-device using `probe-rs` with:
+After answering the prompts, you can `cd` into your new project's directory.
+
+Make sure that you have connected the device you wish to flash using an interface which is compatible with `probe-rs`. For any devices which have the `USB_SERIAL_JTAG` peripheral (ESP32-C3/C6/H2/S3) then you can use this interface, usually labelled USB on the official devkits from Espressif. For chips without this peripheral (ESP32, ESP32-C2) you must use an external programmer such as an ESP-Prog in order to use `probe-rs` with that device.
+
+> [!IMPORTANT]  
+> At the time of writing, `probe-rs` does not support flashing the original ESP32; with time this should change. All other devices can be flashed.
+
+Finally, to build, flash, and execute your application on-device using `probe-rs`:
 
 ```
 cargo run --release
