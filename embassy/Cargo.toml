@@ -13,18 +13,13 @@ defmt            = "0.3.8"
 defmt-rtt        = "0.4.1"
 embassy-executor = { version = "0.5.0",  features = ["defmt"] }
 embassy-time     = { version = "0.3.1",  features = ["generic-queue-8"] }
-esp-backtrace    = { version = "0.12.1", features = ["{{ mcu }}", "defmt", "exception-handler", "panic-handler"] }
-esp-hal          = { version = "0.18.0", features = ["{{ mcu }}", "async", "defmt"] }
-esp-hal-embassy  = { version = "0.1.0",  features = ["{{ mcu }}"] }
+esp-backtrace    = { version = "0.13.0", features = ["{{ mcu }}", "defmt", "exception-handler", "panic-handler"] }
+esp-hal          = { version = "0.19.0", features = ["{{ mcu }}", "defmt", "async"] }
+esp-hal-embassy  = { version = "0.2.0",  features = ["{{ mcu }}", "defmt"] }
 static_cell      = { version = "2.1.0",  features = ["nightly"] }
 
 [profile.release]
 debug         = true  # Debug info is useful, and does not affect the size of the final binary
 codegen-units = 1     # LLVM can perform better optimizations using a single thread
-lto           = "fat" # TODO: ???
-opt-level     = "s"   # TODO: ???
-
-[patch.crates-io]
-esp-backtrace   = { git = "https://github.com/esp-rs/esp-hal", rev = "a2883ac" }
-esp-hal         = { git = "https://github.com/esp-rs/esp-hal", rev = "a2883ac" }
-esp-hal-embassy = { git = "https://github.com/esp-rs/esp-hal", rev = "a2883ac" }
+lto           = "fat" # Attempt to perform optimizations across all crates within the dependency graph
+opt-level     = "s"   # Optimize for binary size, but keep loop vectorization enabled
