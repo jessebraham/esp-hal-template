@@ -38,9 +38,7 @@ jobs:
 
       # Install the Rust toolchain for RISC-V devices:
       - if: ${{ !contains(fromJson('["esp32", "esp32s2", "esp32s3"]'), matrix.mcu) }}
-        uses: dtolnay/rust-toolchain@v1
-        with:
-          toolchain: nightly-2024-06-01 # TODO: Remove date when able
+        uses: dtolnay/rust-toolchain@stable
 
       # Install the Rust toolchain for Xtensa devices:
       - if: ${{ contains(fromJson('["esp32", "esp32s2", "esp32s3"]'), matrix.mcu) }}

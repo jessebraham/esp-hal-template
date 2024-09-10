@@ -1,6 +1,5 @@
 #![no_std]
 #![no_main]
-#![feature(type_alias_impl_trait)]
 
 use defmt::info;
 use defmt_rtt as _;
@@ -13,9 +12,8 @@ use esp_hal::{
     prelude::*,
     rtc_cntl::Rtc,
     system::SystemControl,
-    timer::{timg::TimerGroup, OneShotTimer},
+    timer::timg::TimerGroup,
 };
-use static_cell::make_static;
 
 #[main]
 async fn main(spawner: Spawner) {
@@ -24,16 +22,14 @@ async fn main(spawner: Spawner) {
     let clocks = ClockControl::boot_defaults(system.clock_control).freeze();
 
     // Enable the RWDT watchdog timer:
-    let mut rtc = Rtc::new(peripherals.LPWR, None);
+    let mut rtc = Rtc::new(peripherals.LPWR);
     rtc.rwdt.set_timeout(2.secs());
     rtc.rwdt.enable();
     info!("RWDT watchdog enabled!");
 
     // Initialize the SYSTIMER peripheral, and then Embassy:
-    let timg0 = TimerGroup::new(peripherals.TIMG0, &clocks, None);
-    let timers = [OneShotTimer::new(timg0.timer0.into())];
-    let timers = make_static!(timers);
-    esp_hal_embassy::init(&clocks, timers);
+    let timg0 = TimerGroup::new(peripherals.TIMG0, &clocks);
+    esp_hal_embassy::init(&clocks, timg0.timer0);
     info!("Embassy initialized!");
 
     // TODO: Spawn some tasks
