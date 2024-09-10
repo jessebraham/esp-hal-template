@@ -13,6 +13,6 @@ if mcu in ["esp32", "esp32s2", "esp32s3"] {
     };
 
     variable::set("arch",        "riscv");
-    variable::set("toolchain",   "nightly-2024-06-01"); // TODO: Remove date when able
+    variable::set("toolchain",   "stable");
     variable::set("rust_target", `riscv32${extensions}-unknown-none-elf`);
 }
