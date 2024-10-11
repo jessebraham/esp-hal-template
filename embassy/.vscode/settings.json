@@ -1,6 +1,9 @@
 {
   "editor.formatOnSave": true,
 
+  // rust-analyzer:
+  "rust-analyzer.cargo.allTargets": false,
+
   // Even Better TOML:
   "evenBetterToml.formatter.alignComments": true,
   "evenBetterToml.formatter.alignEntries": true,

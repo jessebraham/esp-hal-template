@@ -6,18 +6,18 @@ use defmt_rtt as _;
 use embassy_executor::Spawner;
 use embassy_time::{Duration, Timer};
 use esp_backtrace as _;
-use esp_hal::{config::WatchdogStatus, prelude::*, rtc_cntl::Rtc, timer::timg::TimerGroup};
+use esp_hal::{config::WatchdogStatus, prelude::*, rtc_cntl::Rtc, timer::timg::TimerGroup, Config};
 
 #[main]
 async fn main(spawner: Spawner) {
     let peripherals = esp_hal::init({
-        let mut config = esp_hal::Config::default();
+        let mut config = Config::default();
         config.watchdog.rwdt = WatchdogStatus::Enabled(2.secs());
         config
     });
     info!("RWDT watchdog enabled!");
 
-    // Initialize the SYSTIMER peripheral, and then Embassy:
+    // Initialize the TIMG0 peripheral, and then Embassy:
     let timg0 = TimerGroup::new(peripherals.TIMG0);
     esp_hal_embassy::init(timg0.timer0);
     info!("Embassy initialized!");
